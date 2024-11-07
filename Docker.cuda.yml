@@ -1,5 +1,5 @@
 # Use the official PyTorch image with CUDA support as a base
-FROM pytorch/pytorch:2.0.1-cuda12.5-cudnn8-runtime
+FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
 
 # Install necessary packages including git, git-lfs, wget, and other dependencies
 RUN apt-get update && \
