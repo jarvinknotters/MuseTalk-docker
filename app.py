@@ -418,7 +418,7 @@ with gr.Blocks(css=css) as demo:
 
 # Set the IP and port
 ip_address = "0.0.0.0"  # Replace with your desired IP address
-port_number = 7860  # Replace with your desired port number
+port_number = 7866 # Replace with your desired port number
 
 
 demo.queue().launch(

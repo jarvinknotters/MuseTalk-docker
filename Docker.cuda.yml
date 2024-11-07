@@ -1,0 +1,77 @@
+# Use the NVIDIA CUDA image as a base
+FROM nvidia/cuda:12.5.0-runtime-ubuntu22.04
+
+# Install necessary packages including git, git-lfs, wget, and Python
+RUN apt-get update && \
+    apt-get install -y git git-lfs wget python3 python3-pip && \
+    git lfs install && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Clone the https://github.com/TMElyralab/MuseTalk repository from Hugging Face
+# ComfyUI/models/diffusers/TMElyralab/MuseTalk/
+# ├── musetalk
+# │   └── musetalk.json
+# │   └── pytorch_model.bin
+# ├── dwpose
+# │   └── dw-ll_ucoco_384.pth
+# ├── face-parse-bisent
+# │   ├── 79999_iter.pth
+# │   └── resnet18-5c106cde.pth
+# ├── sd-vae-ft-mse
+# │   ├── config.json
+# │   └── diffusion_pytorch_model.bin
+# └── whisper
+#     └── tiny.pt
+RUN git clone https://huggingface.co/TMElyralab/MuseTalk.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk && \
+    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk && \
+    git lfs pull
+
+# Clone the DWPose repository from Hugging Face
+RUN git clone https://huggingface.co/yzd-v/DWPose.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/dwpose && \
+    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/dwpose && \
+    git lfs pull
+
+# Clone the SD-VAE-FT-MSE repository from Hugging Face
+RUN git clone https://huggingface.co/stabilityai/sd-vae-ft-mse.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/sd-vae-ft-mse && \
+    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/sd-vae-ft-mse && \
+    git lfs pull
+
+# Download the face-parse-bisent model using wget
+RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/face-parse-bisent && \
+    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/face-parse-bisent/79999_iter.pth 'https://drive.usercontent.google.com/u/0/uc?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812&export=download'
+
+# Download the resnet18 model using wget
+RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/resnet18 && \
+    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/resnet18/resnet18-5c106cde.pth 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
+
+# Download the whisper model using wget
+RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper && \
+    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper/tiny.pt 'https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt'
+
+# Copy the requirements file into the container
+COPY MuseTalk /app/MuseTalk
+
+# Install the required Python packages
+RUN pip3 install --no-cache-dir -r /app/MuseTalk/requirements.txt
+
+# Install specific mmlab packages
+RUN pip3 install --no-cache-dir -U openmim && \
+    mim install mmengine && \
+    mim install "mmcv==2.0.1" && \
+    mim install "mmdet==3.1.0" && \
+    mim install "mmpose==1.1.0"
+
+# Expose the necessary port 
+EXPOSE 7866
+
+# Command to run your application
+CMD ["python3", "/app/MuseTalk/app.py"]
+
+# To run the docker image, use docker-compose or run with volume mounted
+# cd to the dir where the repo MuseTalk stays
+# docker-compose build 
+# docker-compose up

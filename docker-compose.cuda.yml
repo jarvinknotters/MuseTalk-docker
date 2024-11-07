@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  musetalk:
+    build: .
+    ports:
+      - "7866:7866"
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - ./MuseTalk:/app/MuseTalk
