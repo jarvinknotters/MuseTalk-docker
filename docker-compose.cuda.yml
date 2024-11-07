@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   musetalk:
-    build: .
+    build:
+      context: .
+      dockerfile: Docker.cuda.yml
     ports:
       - "7866:7866"
     runtime: nvidia
