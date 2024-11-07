@@ -11,4 +11,4 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
     volumes:
-      - ./:/app/
+      - .:/app
