@@ -12,7 +12,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Clone the https://github.com/TMElyralab/MuseTalk repository from Hugging Face
-# ComfyUI/models/diffusers/TMElyralab/MuseTalk/
+# ./models/
 # ├── musetalk
 # │   └── musetalk.json
 # │   └── pytorch_model.bin
@@ -26,31 +26,29 @@ WORKDIR /app
 # │   └── diffusion_pytorch_model.bin
 # └── whisper
 #     └── tiny.pt
-RUN git clone https://huggingface.co/TMElyralab/MuseTalk.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk && \
-    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk && \
+# Clone the MuseTalk repository from Hugging Face
+RUN git clone https://huggingface.co/TMElyralab/MuseTalk.git /app/models/musetalk && \
+    cd /app/models/musetalk && \
     git lfs pull
 
 # Clone the DWPose repository from Hugging Face
-RUN git clone https://huggingface.co/yzd-v/DWPose.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/dwpose && \
-    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/dwpose && \
+RUN git clone https://huggingface.co/yzd-v/DWPose.git /app/models/dwpose && \
+    cd /app/models/dwpose && \
     git lfs pull
 
 # Clone the SD-VAE-FT-MSE repository from Hugging Face
-RUN git clone https://huggingface.co/stabilityai/sd-vae-ft-mse.git /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/sd-vae-ft-mse && \
-    cd /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/sd-vae-ft-mse && \
+RUN git clone https://huggingface.co/stabilityai/sd-vae-ft-mse.git /app/models/sd-vae-ft-mse && \
+    cd /app/models/sd-vae-ft-mse && \
     git lfs pull
 
-# Download the face-parse-bisent model using wget
-RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/face-parse-bisent && \
-    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/face-parse-bisent/79999_iter.pth 'https://drive.usercontent.google.com/u/0/uc?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812&export=download'
+# Download the face-parse-bisent model and dependencies using wget
+RUN mkdir -p /app/models/face-parse-bisent && \
+    wget -O /app/models/face-parse-bisent/79999_iter.pth 'https://drive.usercontent.google.com/u/0/uc?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812&export=download' && \
+    wget -O /app/models/face-parse-bisent/resnet18-5c106cde.pth 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 
-# Download the resnet18 model using wget
-RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/resnet18 && \
-    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/resnet18/resnet18-5c106cde.pth 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
-
-# Download the whisper model using wget
-RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper && \
-    wget -O /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper/tiny.pt 'https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt'
+# Download the whisper model
+RUN mkdir -p /app/models/whisper && \
+    wget -O /app/models/whisper/tiny.pt 'https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt'
 
 # Copy the requirements file into the container
 COPY . /app
