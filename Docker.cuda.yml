@@ -1,9 +1,9 @@
-# Use the NVIDIA CUDA image as a base
-FROM nvidia/cuda:12.5.0-runtime-ubuntu22.04
+# Use the official PyTorch image with CUDA support as a base
+FROM pytorch/pytorch:2.0.1-cuda12.5-cudnn8-runtime
 
-# Install necessary packages including git, git-lfs, wget, and Python
+# Install necessary packages including git, git-lfs, wget, and other dependencies
 RUN apt-get update && \
-    apt-get install -y git git-lfs wget libgl1-mesa-glx  python3 python3-pip && \
+    apt-get install -y git git-lfs wget libgl1-mesa-glx libglib2.0-dev && \
     git lfs install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -11,21 +11,6 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /app
 
-# Clone the https://github.com/TMElyralab/MuseTalk repository from Hugging Face
-# ./models/
-# ├── musetalk
-# │   └── musetalk.json
-# │   └── pytorch_model.bin
-# ├── dwpose
-# │   └── dw-ll_ucoco_384.pth
-# ├── face-parse-bisent
-# │   ├── 79999_iter.pth
-# │   └── resnet18-5c106cde.pth
-# ├── sd-vae-ft-mse
-# │   ├── config.json
-# │   └── diffusion_pytorch_model.bin
-# └── whisper
-#     └── tiny.pt
 # Clone the MuseTalk repository from Hugging Face
 RUN git clone https://huggingface.co/TMElyralab/MuseTalk.git /app/models/musetalk && \
     cd /app/models/musetalk && \
@@ -50,41 +35,21 @@ RUN mkdir -p /app/models/face-parse-bisent && \
 RUN mkdir -p /app/models/whisper && \
     wget -O /app/models/whisper/tiny.pt 'https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt'
 
-# Copy the requirements file into the container
-COPY . /app
+# Copy requirements file into the container
+COPY requirements.txt .
 
-# Download and install PyTorch
-RUN wget https://download.pytorch.org/whl/cu118/torch-2.0.1%2Bcu118-cp310-cp310-linux_x86_64.whl && \
-    pip install torch-2.0.1+cu118-cp310-cp310-linux_x86_64.whl
-
-# Clean up to reduce image size (optional)
-RUN rm torch-2.0.1+cu118-cp310-cp310-linux_x86_64.whl
 # Install the required Python packages
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install specific mmlab packages
-RUN pip3 install --no-cache-dir -U openmim && \
+# Install specific mm lab packages
+RUN pip install --no-cache-dir -U openmim && \
     mim install mmengine && \
     mim install "mmcv-full==2.0.1" && \
     mim install "mmdet==3.1.0" && \
     mim install "mmpose==1.1.0"
-# Install necessary libraries
-RUN apt-get update && apt-get install -y \
-    libglib2.0-0 \
-    libglib2.0-dev \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
-
-# Clone and setup repositories
-# (keep the rest of your cloning and downloading commands unchanged)
 
 # Expose the necessary port 
 EXPOSE 7866
 
 # Command to run your application
 CMD ["python3", "app.py"]
-
-# To run the docker image, use docker-compose or run with volume mounted
-# cd to the dir where the repo MuseTalk stays
-# docker-compose build 
-# docker-compose up
