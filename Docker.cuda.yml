@@ -65,9 +65,18 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Install specific mmlab packages
 RUN pip3 install --no-cache-dir -U openmim && \
     mim install mmengine && \
-    mim install "mmcv==2.0.1" && \
+    mim install "mmcv-full==2.0.1" && \
     mim install "mmdet==3.1.0" && \
     mim install "mmpose==1.1.0"
+# Install necessary libraries
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libglib2.0-dev \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone and setup repositories
+# (keep the rest of your cloning and downloading commands unchanged)
 
 # Expose the necessary port 
 EXPOSE 7866
