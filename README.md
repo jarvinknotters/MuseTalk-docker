@@ -252,6 +252,14 @@ Finally, these weights should be organized in `models` as follows:
 └── whisper
     └── tiny.pt
 ```
+## Docker container
+```
+To build the image: docker-compose -f Docker-compose.cuda.yml build
+To run: docker-compose -f Docker-compose.cuda.yml up
+
+To stop the container: docker-compose -f Docker-compose.cuda.yml down
+
+```
 ## Quickstart
 
 ### Inference
