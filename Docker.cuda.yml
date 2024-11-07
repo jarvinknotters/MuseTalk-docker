@@ -55,6 +55,12 @@ RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper && \
 # Copy the requirements file into the container
 COPY . /app
 
+# Download and install PyTorch
+RUN wget https://download.pytorch.org/whl/cu118/torch-2.0.1%2Bcu118-cp310-cp310-linux_x86_64.whl && \
+    pip install torch-2.0.1+cu118-cp310-cp310-linux_x86_64.whl
+
+# Clean up to reduce image size (optional)
+RUN rm torch-2.0.1+cu118-cp310-cp310-linux_x86_64.whl
 # Install the required Python packages
 RUN pip3 install --no-cache-dir -r requirements.txt
 
