@@ -56,7 +56,7 @@ RUN mkdir -p /app/ComfyUI/models/diffusers/TMElyralab/MuseTalk/whisper && \
 COPY . /app
 
 # Install the required Python packages
-RUN pip3 install --no-cache-dir -r /app/MuseTalk/requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install specific mmlab packages
 RUN pip3 install --no-cache-dir -U openmim && \
@@ -69,7 +69,7 @@ RUN pip3 install --no-cache-dir -U openmim && \
 EXPOSE 7866
 
 # Command to run your application
-CMD ["python3", "/app/MuseTalk/app.py"]
+CMD ["python3", "app.py"]
 
 # To run the docker image, use docker-compose or run with volume mounted
 # cd to the dir where the repo MuseTalk stays
