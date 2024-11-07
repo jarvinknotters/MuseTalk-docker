@@ -1,4 +1,4 @@
-# MuseTalk
+# MuseTalk In Docker Container
 
 MuseTalk: Real-Time High Quality Lip Synchronization with Latent Space Inpainting
 </br>
