@@ -21,14 +21,6 @@ We introduce `MuseTalk`, a **real-time high quality** lip-syncing model (30fps+ 
 
 :new: Update: We are thrilled to announce that [MusePose](https://github.com/TMElyralab/MusePose/) has been released. MusePose is an image-to-video generation framework for virtual human under control signal like pose. Together with MuseV and MuseTalk, we hope the community can join us and march towards the vision where a virtual human can be generated end2end with native ability of full body movement and interaction.
 
-# Recruitment
-Join Lyra Lab, Tencent Music Entertainment!
-
-We are currently seeking AIGC researchers including Internships, New Grads, and Senior (实习、校招、社招).
-
-Please find details in the following two links or contact zkangchen@tencent.com
-
-- AI Researcher (https://join.tencentmusic.com/social/post-details/?id=13488, https://join.tencentmusic.com/social/post-details/?id=13502)
 
 # Overview
 `MuseTalk` is a real-time high quality audio-driven lip-syncing model trained in the latent space of `ft-mse-vae`, which
@@ -52,190 +44,8 @@ MuseTalk was trained in latent spaces, where the images were encoded by a freeze
 
 Note that although we use a very similar architecture as Stable Diffusion, MuseTalk is distinct in that it is **NOT** a diffusion model. Instead, MuseTalk operates by inpainting in the latent space with a single step.
 
-## Cases
-### MuseV + MuseTalk make human photos alive！
-<table class="center">
-  <tr style="font-weight: bolder;text-align:center;">
-        <td width="33%">Image</td>
-        <td width="33%">MuseV</td>
-        <td width="33%">+MuseTalk</td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/musk/musk.png width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/4a4bb2d1-9d14-4ca9-85c8-7f19c39f712e controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/b2a879c2-e23a-4d39-911d-51f0343218e4 controls preload></video>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/yongen/yongen.jpeg width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/57ef9dee-a9fd-4dc8-839b-3fbbbf0ff3f4 controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/94d8dcba-1bcd-4b54-9d1d-8b6fc53228f0 controls preload></video>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/sit/sit.jpeg width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/5fbab81b-d3f2-4c75-abb5-14c76e51769e controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/f8100f4a-3df8-4151-8de2-291b09269f66 controls preload></video>
-    </td>
-  </tr>
-   <tr>
-    <td>
-      <img src=assets/demo/man/man.png width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/a6e7d431-5643-4745-9868-8b423a454153 controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/6ccf7bc7-cb48-42de-85bd-076d5ee8a623 controls preload></video>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/monalisa/monalisa.png width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/1568f604-a34f-4526-a13a-7d282aa2e773 controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/a40784fc-a885-4c1f-9b7e-8f87b7caf4e0 controls preload></video>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/sun1/sun.png width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/37a3a666-7b90-4244-8d3a-058cb0e44107 controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/172f4ff1-d432-45bd-a5a7-a07dec33a26b controls preload></video>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/sun2/sun.png width="95%">
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/37a3a666-7b90-4244-8d3a-058cb0e44107 controls preload></video>
-    </td>
-    <td >
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/85a6873d-a028-4cce-af2b-6c59a1f2971d controls preload></video>
-    </td>
-  </tr>
-</table >
 
-* The character of the last two rows, `Xinying Sun`, is a supermodel KOL. You can follow her on [douyin](https://www.douyin.com/user/MS4wLjABAAAAWDThbMPN_6Xmm_JgXexbOii1K-httbu2APdG8DvDyM8).
-
-## Video dubbing
-<table class="center">
-  <tr style="font-weight: bolder;text-align:center;">
-        <td width="70%">MuseTalk</td>
-        <td width="30%">Original videos</td>
-  </tr>
-  <tr>
-    <td>
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/4d7c5fa1-3550-4d52-8ed2-52f158150f24 controls preload></video>
-    </td>
-    <td>
-      <a href="//www.bilibili.com/video/BV1wT411b7HU">Link</a>
-      <href src=""></href>
-    </td>
-  </tr>
-</table>
-
-* For video dubbing, we applied a self-developed tool which can identify the talking person. 
-
-## Some interesting videos!
-<table class="center">
-  <tr style="font-weight: bolder;text-align:center;">
-        <td width="50%">Image</td>
-        <td width="50%">MuseV + MuseTalk</td>
-  </tr>
-  <tr>
-    <td>
-      <img src=assets/demo/video1/video1.png width="95%">
-    </td>
-    <td>
-      <video src=https://github.com/TMElyralab/MuseTalk/assets/163980830/1f02f9c6-8b98-475e-86b8-82ebee82fe0d controls preload></video>
-    </td>
-  </tr>
-</table>
-
-# TODO:
-- [x] trained models and inference codes.
-- [x] Huggingface Gradio [demo](https://huggingface.co/spaces/TMElyralab/MuseTalk).
-- [x] codes for real-time inference.
-- [ ] technical report.
-- [ ] training codes.
-- [ ] a better model (may take longer).
-
-
-# Getting Started
-We provide a detailed tutorial about the installation and the basic usage of MuseTalk for new users:
-
-## Third party integration
-Thanks for the third-party integration, which makes installation and use more convenient for everyone.
-We also hope you note that we have not verified, maintained, or updated third-party. Please refer to this project for specific results.
-
-### [ComfyUI](https://github.com/chaojie/ComfyUI-MuseTalk)
-
-## Installation
-To prepare the Python environment and install additional packages such as opencv, diffusers, mmcv, etc., please follow the steps below:
-### Build environment
-
-We recommend a python version >=3.10 and cuda version =11.7. Then build environment as follows:
-
-```shell
-pip install -r requirements.txt
-```
-
-### mmlab packages
-```bash
-pip install --no-cache-dir -U openmim 
-mim install mmengine 
-mim install "mmcv>=2.0.1" 
-mim install "mmdet>=3.1.0" 
-mim install "mmpose>=1.1.0" 
-```
-
-### Download ffmpeg-static
-Download the ffmpeg-static and
-```
-export FFMPEG_PATH=/path/to/ffmpeg
-```
-for example:
-```
-export FFMPEG_PATH=/musetalk/ffmpeg-4.4-amd64-static
-```
-### Download weights
-You can download weights manually as follows:
-
-1. Download our trained [weights](https://huggingface.co/TMElyralab/MuseTalk).
-
-2. Download the weights of other components:
-   - [sd-vae-ft-mse](https://huggingface.co/stabilityai/sd-vae-ft-mse)
-   - [whisper](https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt)
-   - [dwpose](https://huggingface.co/yzd-v/DWPose/tree/main)
-   - [face-parse-bisent](https://github.com/zllrunning/face-parsing.PyTorch)
-   - [resnet18](https://download.pytorch.org/models/resnet18-5c106cde.pth)
-
-
-Finally, these weights should be organized in `models` as follows:
+these weights should be organized in `models` as follows:
 ```
 ./models/
 ├── musetalk
@@ -252,14 +62,19 @@ Finally, these weights should be organized in `models` as follows:
 └── whisper
     └── tiny.pt
 ```
-## Docker container
+## Docker container with docker-compose
 ```
-To build the image: docker-compose -f Docker-compose.cuda.yml build
-To run: docker-compose -f Docker-compose.cuda.yml up
+To build the image: 
+docker-compose -f Docker-compose.cuda.yml build
 
-To stop the container: docker-compose -f Docker-compose.cuda.yml down
+To run: 
+docker-compose -f Docker-compose.cuda.yml up
+
+To stop the container: 
+docker-compose -f Docker-compose.cuda.yml down
+
 To test in the container with interactive mode:
-    docker run musetalk-docker_musetalk -v ./:/app -p 7866:7866 -it /bin/bash
+docker run musetalk-docker_musetalk -v ./:/app -p 7866:7866 -it /bin/bash
 ```
 ## Quickstart
 
