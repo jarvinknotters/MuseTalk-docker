@@ -258,7 +258,8 @@ To build the image: docker-compose -f Docker-compose.cuda.yml build
 To run: docker-compose -f Docker-compose.cuda.yml up
 
 To stop the container: docker-compose -f Docker-compose.cuda.yml down
-
+To test in the container with interactive mode:
+    docker run musetalk-docker_musetalk -v ./:/app -p 7866:7866 -it /bin/bash
 ```
 ## Quickstart
 

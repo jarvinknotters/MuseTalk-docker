@@ -11,18 +11,21 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /app
 
-# Clone the MuseTalk repository from Hugging Face
-RUN git clone https://huggingface.co/TMElyralab/MuseTalk.git /app/models/musetalk && \
-    cd /app/models/musetalk && \
-    git lfs pull
+RUN wget https://www.johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz && \
+    tar -xvf ffmpeg-release-amd64-static.tar.xz && \
+    rm ffmpeg-release-amd64-static.tar.xz && \
+    ffmpeg_dir=$(find /app -maxdepth 1 -type d -name "ffmpeg-*" 2>/dev/null) && [ -n "$ffmpeg_dir" ] && mv "$ffmpeg_dir" /app/ffmpeg || echo "FFmpeg directory not found." && \
+    echo 'export FFMPEG_PATH=/app/ffmpeg' >> ~/.bashrc && \
+    source ~/.bashrc && 
+
 
 # Clone the DWPose repository from Hugging Face
-RUN git clone https://huggingface.co/yzd-v/DWPose.git /app/models/dwpose && \
+RUN GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/yzd-v/DWPose.git /app/models/dwpose && \
     cd /app/models/dwpose && \
     git lfs pull
 
 # Clone the SD-VAE-FT-MSE repository from Hugging Face
-RUN git clone https://huggingface.co/stabilityai/sd-vae-ft-mse.git /app/models/sd-vae-ft-mse && \
+RUN GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/stabilityai/sd-vae-ft-mse.git /app/models/sd-vae-ft-mse && \
     cd /app/models/sd-vae-ft-mse && \
     git lfs pull
 
@@ -35,8 +38,18 @@ RUN mkdir -p /app/models/face-parse-bisent && \
 RUN mkdir -p /app/models/whisper && \
     wget -O /app/models/whisper/tiny.pt 'https://openaipublic.azureedge.net/main/whisper/models/65147644a518d12f04e32d6f3b26facc3f8dd46e5390956a9424a650c0ce22b9/tiny.pt'
 
-# Copy requirements file into the container
-COPY requirements.txt .
+# Clone the MuseTalk repository from Hugging Face
+RUN rm -rf /app/models/musetalk && \
+    mkdir -p /app/models/musetalk && \
+    GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/TMElyralab/MuseTalk && \
+    cd /app/models/musetalk && \
+    git lfs pull
+
+RUN cd / && \
+    git clone --depth 1 --single-branch --branch main https://github.com/YankeeMarco/MuseTalk-docker.git && \
+    cp -rn /MuseTalk-docker/.[!.]*   /app/ && \
+    cp -rn /MuseTalk-docker/* /app/ && 
+    rm -rf /MuseTalk-docker
 
 # Install the required Python packages
 RUN pip install --no-cache-dir -r requirements.txt
@@ -44,7 +57,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install specific mm lab packages
 RUN pip install --no-cache-dir -U openmim && \
     mim install mmengine && \
-    mim install "mmcv-full==2.0.1" && \
+    mim install "mmcv-full==1.7.1" && \
     mim install "mmdet==3.1.0" && \
     mim install "mmpose==1.1.0"
 
@@ -52,4 +65,4 @@ RUN pip install --no-cache-dir -U openmim && \
 EXPOSE 7866
 
 # Command to run your application
-CMD ["python3", "app.py"]
+CMD ["cd", "/app", "&&", "python3", "app.py"]
