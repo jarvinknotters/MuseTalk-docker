@@ -63,6 +63,7 @@ these weights should be organized in `models` as follows:
     └── tiny.pt
 ```
 ## Docker container with docker-compose
+Please note that this repository employs a temporary solution for handling model files. We recommend that you customize this approach to suit your needs, potentially by mounting external volumes containing the actual model files. In this context, we are treating the Docker image as an independent function to facilitate easier deployment.
 ```
 To build the image: 
 docker-compose -f Docker-compose.cuda.yml build
@@ -75,6 +76,9 @@ docker-compose -f Docker-compose.cuda.yml down
 
 To test in the container with interactive mode:
 docker run musetalk-docker_musetalk -v ./:/app -p 7866:7866 -it /bin/bash
+
+
+
 ```
 ## Quickstart
 
