@@ -146,7 +146,6 @@ terminaltables==3.1.10
 tokenizers==0.15.2
 tomli==2.0.2
 tomlkit==0.12.0
-torch @ file:///app/torch-2.0.1%2Bcu118-cp310-cp310-linux_x86_64.whl
 torchaudio==2.0.2+cu118
 torchvision==0.15.2+cu118
 tqdm==4.65.2
