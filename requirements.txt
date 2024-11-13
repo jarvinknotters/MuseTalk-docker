@@ -1,3 +1,4 @@
+--extra-index-url https://download.pytorch.org/whl/cu118
 absl-py==2.1.0
 accelerate==0.28.0
 addict==2.4.0
@@ -146,8 +147,9 @@ terminaltables==3.1.10
 tokenizers==0.15.2
 tomli==2.0.2
 tomlkit==0.12.0
-torchaudio==2.0.2+cu118
-torchvision==0.15.2+cu118
+torch==2.0.1+cu117
+torchaudio==2.0.2+cu117
+torchvision==0.15.2+cu117
 tqdm==4.65.2
 transformers==4.39.2
 triton==2.0.0
