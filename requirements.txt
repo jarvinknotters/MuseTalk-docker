@@ -1,4 +1,4 @@
---extra-index-url https://download.pytorch.org/whl/cu118
+--extra-index-url https://download.pytorch.org/whl/cu117
 absl-py==2.1.0
 accelerate==0.28.0
 addict==2.4.0
