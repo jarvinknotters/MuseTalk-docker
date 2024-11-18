@@ -59,7 +59,7 @@ RUN rm -rf /app/models/musetalk && \
     git lfs pull
 
 RUN cd / && \
-    git clone --depth 1 --single-branch --branch main https://github.com/YankeeMarco/MuseTalk-docker.git && \
+    git clone --depth 1 --single-branch --branch main https://github.com/jarvinknotters/MuseTalk-docker.git && \
     cp -rn /MuseTalk-docker/.[!.]*   /app/ && \
     cp -rn /MuseTalk-docker/* /app/ && \
     rm -rf /MuseTalk-docker
