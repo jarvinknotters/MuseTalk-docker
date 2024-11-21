@@ -51,7 +51,7 @@ RUN rm -rf /app/models/musetalk && \
 RUN cd / && \
     git clone --depth 1 --single-branch --branch main https://github.com/jarvinknotters/MuseTalk-docker.git && \
     cp -rn /MuseTalk-docker/.[!.]*   /app/ && \
-    cp -rn /MuseTalk-docker/* /app/ && 
+    cp -rn /MuseTalk-docker/* /app/ && \
     rm -rf /MuseTalk-docker
 
 # Install the required Python packages
